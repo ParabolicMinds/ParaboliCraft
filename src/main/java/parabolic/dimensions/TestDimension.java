@@ -22,6 +22,7 @@ public class TestDimension extends WorldProvider {
 
     @Override
     public void init() {
+        this.hasSkyLight = true;
         this.biomeProvider = new BiomeProviderSingle(Biomes.MUTATED_JUNGLE);
     }
 
@@ -34,7 +35,7 @@ public class TestDimension extends WorldProvider {
     @Override
     public boolean isSurfaceWorld()
     {
-        return false;
+        return true;
     }
 
     @Override
@@ -46,6 +47,6 @@ public class TestDimension extends WorldProvider {
     @SideOnly(Side.CLIENT)
     public boolean doesXZShowFog(int x, int z)
     {
-        return true;
+        return false;
     }
 }

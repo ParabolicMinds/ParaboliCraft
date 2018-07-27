@@ -2,7 +2,7 @@ package parabolic.util;
 
 import java.util.Random;
 
-public class SimplexNoise {
+public class SimplexNoise implements INoise {
 
     private static Grad grad3[] = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
             new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1),
@@ -28,7 +28,10 @@ public class SimplexNoise {
     private int[] perm;
     private int[] perm12;
 
-    public SimplexNoise(Random rndIn) {
+    private double[] scale = new double[4];
+
+    public SimplexNoise(Random rndIn, double xScale, double yScale, double zScale, double wScale) {
+
         rnd = rndIn;
 
         perm = new int[512];
@@ -45,35 +48,24 @@ public class SimplexNoise {
         for (int l = 0; l < 256; ++l) {
             perm12[l] = perm12[l + 256] = perm[l] % 12;
         }
+
+        scale[0] = xScale;
+        scale[1] = yScale;
+        scale[2] = zScale;
+        scale[3] = wScale;
     }
 
-    // NOISE FUNCTION MACROS
-
-    // ( Y * XSIZE + X )
-    public double[] generate(double[] data, double xOffs, double yOffs, int xSize, int ySize, double xScale, double yScale) {
-        if (data == null) data = new double[xSize * ySize];
-        for(int y = 0; y < ySize; y++) for (int x = 0; x < xSize; x++)
-            data[y * xSize + x] = generate(xScale * ((double)x + xOffs), yScale * ((double)y + yOffs));
-        return data;
-    }
-    public double[] generate(double[] data, double xOffs, double yOffs, int xSize, int ySize) {
-        return generate(data, xOffs, yOffs, xSize, ySize, 1.0, 1.0);
-    }
-
-    // ( X * ZSIZE * YSIZE + Z * YSIZE + Y )
-    public double[] generate(double[] data, double xOffs, double yOffs, double zOffs, int xSize, int ySize, int zSize, double xScale, double yScale, double zScale) {
-        if (data == null) data = new double[xSize * ySize * zSize];
-        for(int x = 0; x < xSize; x++) for (int z = 0; z < zSize; z++) for (int y = 0; y < ySize; y++)
-            data[x * zSize * ySize + z * ySize + y] = generate(xScale * ((double)x + xOffs), yScale * ((double)y + yOffs), zScale * ((double)z + zOffs));
-        return data;
-    }
-    public double[] generate(double[] data, double xOffs, double yOffs, double zOffs, int xSize, int ySize, int zSize) {
-        return generate(data, xOffs, yOffs, zOffs, xSize, ySize, zSize, 1.0, 1.0, 1.0);
-    }
+    public SimplexNoise(Random rndIn) { this(rndIn, 1, 1, 1, 1); }
+    public SimplexNoise(Random rndIn, double scale) { this(rndIn, scale, scale, scale, scale); }
+    public SimplexNoise(Random rndIn, double xScale, double yScale) { this(rndIn, xScale, yScale, 1, 1); }
+    public SimplexNoise(Random rndIn, double xScale, double yScale, double zScale) { this(rndIn, xScale, yScale, zScale, 1); }
 
     // NOISE ALGORITHMS
 
     public double generate(double x, double y) {
+
+        x *= scale[0];
+        y *= scale[1];
 
         double n0, n1, n2; // Noise contributions from the three corners
         // Skew the input space to determine which simplex cell we're in
@@ -134,6 +126,11 @@ public class SimplexNoise {
     }
 
     public double generate(double x, double y, double z) {
+
+        x *= scale[0];
+        y *= scale[1];
+        z *= scale[2];
+
         double n0, n1, n2, n3; // Noise contributions from the four corners
         // Skew the input space to determine which simplex cell we're in
         double s = (x + y + z) * F3; // Very nice and simple skew factor for 3D
@@ -254,6 +251,11 @@ public class SimplexNoise {
     }
 
     public double generate(double x, double y, double z, double w) {
+
+        x *= scale[0];
+        y *= scale[1];
+        z *= scale[2];
+        w *= scale[3];
 
         double n0, n1, n2, n3, n4; // Noise contributions from the five corners
         // Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in
