@@ -1,7 +1,7 @@
-package cagelight.items;
+package parabolic.items;
 
-import cagelight.CageModRegistration;
-import cagelight.dimensions.TestDimension;
+import parabolic.mod.ParaboliCraftRegistrar;
+import parabolic.dimensions.TestDimension;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,10 +24,10 @@ public class TeleporterTest extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (worldIn.isRemote) return super.onItemRightClick(worldIn, playerIn, handIn);
-        if (playerIn.dimension == CageModRegistration.DIMENSION_TEST_ID)
+        if (playerIn.dimension == ParaboliCraftRegistrar.DIMENSION_TEST_ID)
             playerIn.changeDimension(0, TestDimension.TELEPORTER);
         else
-            playerIn.changeDimension(CageModRegistration.DIMENSION_TEST_ID, TestDimension.TELEPORTER);
+            playerIn.changeDimension(ParaboliCraftRegistrar.DIMENSION_TEST_ID, TestDimension.TELEPORTER);
         return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 }

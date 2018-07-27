@@ -1,14 +1,14 @@
 [
 {
-  "modid": "cagemod",
-  "name": "Cagelight's Mod",
-  "description": "Example placeholder mod.",
+  "modid": "parabolicraft",
+  "name": "ParaboliCraft",
+  "description": "The Greatest Minceraft Mod",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Cagelight", "Phazmatis"],
+  "credits": "Forge",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

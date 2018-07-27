@@ -1,6 +1,6 @@
-package cagelight;
+package parabolic.mod;
 
-import cagelight.dimensions.TestDimension;
+import parabolic.dimensions.TestDimension;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.DimensionManager;
@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
-import cagelight.items.*;
+import parabolic.items.*;
 
-@Mod.EventBusSubscriber(modid = CageMod.MODID)
-public class CageModRegistration {
+@Mod.EventBusSubscriber(modid = ParaboliCraft.MODID)
+public class ParaboliCraftRegistrar {
 
     // ITEMS
 

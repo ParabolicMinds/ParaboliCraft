@@ -1,4 +1,4 @@
-package cagelight.dimensions;
+package parabolic.dimensions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;

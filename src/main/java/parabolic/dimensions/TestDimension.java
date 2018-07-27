@@ -1,14 +1,11 @@
-package cagelight.dimensions;
+package parabolic.dimensions;
 
-import cagelight.CageModRegistration;
+import parabolic.mod.ParaboliCraftRegistrar;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.gen.ChunkGeneratorEnd;
-import net.minecraft.world.gen.ChunkGeneratorFlat;
-import net.minecraft.world.gen.ChunkGeneratorOverworld;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TestDimension extends WorldProvider {
 
-    public static final DimensionType DIM_TYPE = DimensionType.register("test","_test", CageModRegistration.DIMENSION_TEST_ID, TestDimension.class, false);
+    public static final DimensionType DIM_TYPE = DimensionType.register("test","_test", ParaboliCraftRegistrar.DIMENSION_TEST_ID, TestDimension.class, false);
     public static ITeleporter TELEPORTER = new TestTeleporter();
 
     public DimensionType getDimensionType() {
@@ -42,7 +39,7 @@ public class TestDimension extends WorldProvider {
 
     @Override
     public IChunkGenerator createChunkGenerator() {
-        return new ChunkGeneratorFlat(this.world, this.world.getSeed(), false, null);
+        return new TestChunkGenerator(this.world, this.world.getSeed());
     }
 
     @Override
