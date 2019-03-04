@@ -1,7 +1,5 @@
 package parabolic.items;
 
-import parabolic.mod.ParaboliCraftRegistrar;
-import parabolic.dimensions.TestDimension;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -9,13 +7,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ITeleporter;
 
-public class TeleporterTest extends Item {
+public class TeleporterItem extends Item {
 
-    public static final String name = "teleporter_test";
+    private final DimensionType dim_type;
+    private final ITeleporter teleporter;
 
-    public TeleporterTest() {
+    public TeleporterItem(DimensionType dim_type, ITeleporter teleporter) {
+        this.dim_type = dim_type;
+        this.teleporter = teleporter;
+
+        String name = "teleporter_" + dim_type.getName();
         this.setRegistryName(name);
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.COMBAT);
@@ -24,10 +29,10 @@ public class TeleporterTest extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (worldIn.isRemote) return super.onItemRightClick(worldIn, playerIn, handIn);
-        if (playerIn.dimension == ParaboliCraftRegistrar.DIMENSION_TEST_ID)
-            playerIn.changeDimension(0, TestDimension.TELEPORTER);
+        if (playerIn.dimension == dim_type.getId())
+            playerIn.changeDimension(0, this.teleporter);
         else
-            playerIn.changeDimension(ParaboliCraftRegistrar.DIMENSION_TEST_ID, TestDimension.TELEPORTER);
+            playerIn.changeDimension(dim_type.getId(), this.teleporter);
         return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 }

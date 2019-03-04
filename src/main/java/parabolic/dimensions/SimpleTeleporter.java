@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ITeleporter;
 
-public class TestTeleporter implements ITeleporter {
+public class SimpleTeleporter implements ITeleporter {
 
     @Override
     public void placeEntity(World world, Entity entity, float yaw) {
@@ -39,10 +39,10 @@ public class TestTeleporter implements ITeleporter {
 
         if (dist >= 0) {
             if (entity instanceof EntityPlayerMP) {
-                ((EntityPlayerMP)entity).connection.setPlayerLocation(mX, mY, mZ, entity.rotationYaw, entity.rotationPitch);
+                ((EntityPlayerMP)entity).connection.setPlayerLocation((double)mX + 0.5, (double)mY + 0.5, (double)mZ + 0.5, entity.rotationYaw, entity.rotationPitch);
             }
             else {
-                entity.setLocationAndAngles(mX, mY, mZ, entity.rotationYaw, entity.rotationPitch);
+                entity.setLocationAndAngles((double)mX + 0.5, (double)mY + 0.5, (double)mZ + 0.5, entity.rotationYaw, entity.rotationPitch);
             }
         }
 
